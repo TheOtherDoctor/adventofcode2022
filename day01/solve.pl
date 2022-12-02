@@ -11,6 +11,10 @@ use strict; # force me to declare variables.
 use warnings; # I can stand the feedback.
 
 # slurp the file into one string, including all newlines etc:
+#  note: using a do expression (no loop!) to create the subcontext 
+#  for the local modifier, and hand out the content elegant
+#  as sideeffect, as the value of the last statement in the block
+#  becomes value of the do { } expr, and thus the RHS for the assignment.
 my $filedoc = do {
     local $/ = undef; # no line separator character in this block
     open my $f, "<", "input" or die "file oops. $!";
