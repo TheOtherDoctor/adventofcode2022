@@ -1,7 +1,19 @@
 #!/usr/bin/perl 
-# AoC day 03 puzzle 1: rucksack deduplication
+# AoC day 03 puzzle 2: group-of-three rucksack common badge
 use strict;
 use warnings;
+
+# item/char common to two given strings:
+sub getcommon2{
+  my ($s1,$s2)=@_;
+  # pattern match simple:
+  for my $c (split(//,$s1)){
+    my $f=index($s2,$c); # results in -1 if nomatch.
+    if ($f>=0){ return $c; }
+  }
+  # we are given that there is exactly one duplex item per rucksack:
+  die "assert violated, no duplex item.";
+}
 
 # find duplicate helper:
 sub getduplex{
@@ -12,13 +24,7 @@ sub getduplex{
   my $s1=substr($str,0,$lenhalf);
   my $s2=substr($str,$lenhalf,$lenhalf);
   print "for '$str': len/2 = $lenhalf; ";
-  # pattern match simple:
-  for my $c (split(//,$s1)){
-    my $f=index($s2,$c); # results in -1 if nomatch.
-    if ($f>=0){ return $c; }
-  }
-  # we are given that there is exactly one duplex item per rucksack:
-  die "assert violated, no duplex item.";
+  return getcommon2($s1,$s2);
 }
 
 # prio mapping helper:
