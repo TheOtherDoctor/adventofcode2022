@@ -55,6 +55,9 @@ my @fatelves = grep { $elfsums[$_] eq $elfmax } (0 .. @elfsums-1);
 print "that is carried by elf at index ";
 foreach my $idx (@fatelves) { print "$idx "; }
 print " (counting from 0)\n";
+# (alternatively, sorting of vals and index keys could be done together,
+# see trymapsort.pl for a demo; for case here the above seems sufficient.)
+# 
 
 # puzzle part two: 
 # total amount carried by the top three elves:
