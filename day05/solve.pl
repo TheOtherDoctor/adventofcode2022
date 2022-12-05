@@ -11,9 +11,10 @@ sub dummyinit{ # for getting started without annoying read:
   # example wants enumeration from 1, will not do that with
   # data struct, will adapter that in call transparently then.
   my ($sp) = @_; # stack pointer
-  # construct stacks from bottom to top:
-  $sp->[0] = [ qw(Z N) ];
-  $sp->[1] = [ qw(M C D) ];
+  # construct stacks from top to bottom to ease visual checks
+  # and file reading later:
+  $sp->[0] = [ qw(N Z) ];
+  $sp->[1] = [ qw(D C M) ];
   $sp->[2] = [ qw(P) ];
   # using c'tor brackets, see "Make rule 2" from "man perlreftut".
 }
@@ -25,8 +26,8 @@ sub readinit{ # sooner or later gotta do that annoying reader. later.
 sub movecrates{
   my ($num,$from,$to)=@_;
   while($num>0){
-    my $e=pop(@{$from});
-    push(@{$to},$e);
+    my $e=shift(@{$from});
+    unshift(@{$to},$e);
     $num--;
   }
 }
