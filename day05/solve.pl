@@ -22,6 +22,27 @@ sub dummyinit{ # for getting started without annoying read:
   # using c'tor brackets, see "Make rule 2" from "man perlreftut".
 }
 
+# sub-helper to decompose one init line into colblocks to push onto stacks
+sub line2stacks{
+  my ($line,$sp) = @_; # stack pointer
+  # eat this/each line colblock by colblock:
+  my $idx=0; # stacknum to target.
+  while($_){
+    if(s/^(...)//){ # grab/remove first 3 chars, always true
+      my $snip=$1;
+      if($snip=~m/^\[([A-Z])\]/){ # something to push
+        my $char=$1;
+        push(@{$sp->[$idx]},$char); # push it... operating on top
+      }
+    }else{ die "logic error."; }
+    # if there is something left, advance a field: 
+    if($_){ 
+      s/^ //; # remove the separator space 
+      $idx++; # and incr. index
+    }
+  } # (while content left in line)
+}
+
 # read initial stack setup from file:
 # note that there are trailing spaces to make all lines full length.
 # takes given stack as call arg, and filename from global,
@@ -34,24 +55,8 @@ sub readinit{
     print "read init content line ".$fline++." ...\n";
     chomp();
     if(m/^ 1   2/){close(FH); return;}
-
-    # eat this/each line colblock by colblock:
-    my $idx=0; # stacknum to target.
-    while($_){
-      if(s/^(...)//){ # grab/remove first 3 chars, always true
-        my $snip=$1;
-        if($snip=~m/^\[([A-Z])\]/){ # something to push
-          my $char=$1;
-          push(@{$sp->[$idx]},$char); # push it... operating on top
-        }
-      }else{ die "logic error."; }
-      # if there is something left, advance a field: 
-      if($_){ 
-        s/^ //; # remove the separator space 
-        $idx++; # and incr. index
-      }
-    } # (while content left in line)
-    
+    # got a data line, transfer into stacks:
+    line2stacks($_,$sp);
   } # (while lines in file)
   die "failed to find init header end in input.";
   # no good end here.
