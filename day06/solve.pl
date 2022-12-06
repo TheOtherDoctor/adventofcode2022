@@ -44,7 +44,7 @@ sub isValidMarker{
   return 0;
 }
 
-my $s=getdummy(1); # or getdummy for testing.
+my $s=getread(1); # or getdummy for testing.
 # decompose into substrings and test each, end at first match.
 my $ssl=4; # substring length
 my $ll=length($s);
