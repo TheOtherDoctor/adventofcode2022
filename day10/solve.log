@@ -1,0 +1,16 @@
+end of cycle 2: x=2
+end of cycle 4: x=7
+end of cycle 7: x=6
+
+end of cycle 20: x=17 so score is 340 -> sum=340
+
+end of cycle 60: x=17 so score is 1020 -> sum=1360
+
+end of cycle 100: x=23 so score is 2300 -> sum=3660
+
+end of cycle 140: x=22 so score is 3080 -> sum=6740
+
+end of cycle 180: x=21 so score is 3780 -> sum=10520
+
+end of cycle 220: x=16 so score is 3520 -> sum=14040
+at the end, scoresum is 14040
