@@ -78,6 +78,7 @@ sub movecrates2{
   my @movepack=();
   while($num>0){
     my $e=shift(@{$from});
+    # push from bottom into a fresh empty pack keeps the order:
     push(@movepack,$e);
     $num--;
   }
